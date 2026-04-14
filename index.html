@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blossom Nail Lab | Salón de uñas en Gijón</title>
+  <link rel="icon" href="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776186083/525985790_1092794852995022_117606143606142582_n_vvwfrd.jpg" type="image/jpeg">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -356,6 +357,19 @@
       height: 100%;
       object-fit: cover;
       border: 1px solid var(--gold-accent);
+    }
+
+    .sobre-decor-overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      object-fit: cover;
+      z-index: 10;
+      opacity: 0.7;
     }
 
     .decor-box::before {
@@ -1099,6 +1113,7 @@
       </div>
       <div class="sobre-decor reveal">
         <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183387/642476929_18070682063548562_7485150286704534421_n_yqxvtv.jpg" alt="Sobre Nosotras" referrerPolicy="no-referrer">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776186083/525985790_1092794852995022_117606143606142582_n_vvwfrd.jpg" alt="Logo Overlay" class="sobre-decor-overlay" referrerPolicy="no-referrer">
       </div>
     </div>
   </section>
