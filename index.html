@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blossom Nail Lab | Salón de uñas en Gijón</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS Variables */
+    :root {
+      --beige: #C4B9A8;
+      --beige-dark: #A89F92;
+      --beige-light: #EDE8E1;
+      --cream: #FAF7F2;
+      --charcoal: #2C2C2C;
+      --white: #FFFFFF;
+      --gold-accent: #C9A96E;
+      
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Cormorant Garamond', serif;
+      --font-ui: 'Raleway', sans-serif;
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      cursor: none; /* Custom cursor */
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--charcoal);
+      background-color: var(--cream);
+      overflow-x: hidden;
+      font-size: 1.125rem;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      font-weight: normal;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      background-color: var(--beige);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background-color 0.2s;
+      mix-blend-mode: difference;
+    }
+
+    /* Hover effect on cursor */
+    a:hover ~ .custom-cursor, button:hover ~ .custom-cursor {
+      width: 24px;
+      height: 24px;
+      background-color: var(--gold-accent);
+    }
+
+    /* Global Effects */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+          opacity: 1;
+          transform: translateY(0);
+      transition: all 0.8s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Buttons */
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      border-radius: 0;
+      transition: all 0.3s ease;
+      display: inline-block;
+      cursor: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .btn-outline-white {
+      border: 1px solid var(--white);
+      background: transparent;
+      color: var(--white);
+    }
+    .btn-outline-white:hover {
+      background: var(--white);
+      color: var(--beige);
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--beige);
+      border: 1px solid var(--white);
+    }
+    .btn-white:hover {
+      background: var(--gold-accent);
+      color: var(--white);
+      border-color: var(--gold-accent);
+    }
+
+    .btn-gold {
+      background: var(--gold-accent);
+      color: var(--white);
+      border: 1px solid var(--gold-accent);
+    }
+    .btn-gold:hover {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      transition: background-color 0.3s ease, padding 0.3s ease;
+    }
+    nav.scrolled {
+      background-color: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 3rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    nav.scrolled .logo, nav.scrolled .nav-links a {
+      color: var(--charcoal);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      transition: color 0.3s ease;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      transition: color 0.3s ease;
+      font-weight: 600;
+    }
+    .nav-links a:hover {
+      color: var(--gold-accent);
+    }
+
+    .nav-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.75rem;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background-color: var(--white);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled .hamburger span {
+      background-color: var(--charcoal);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 400px;
+      height: 100vh;
+      background-color: var(--cream);
+      z-index: 99;
+      padding: 6rem 2rem 2rem;
+      transition: right 0.4s ease;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .mobile-menu.open {
+      right: 0;
+    }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--charcoal);
+    }
+    .mobile-menu .btn {
+      text-align: center;
+      margin-top: auto;
+    }
+
+    /* Section 1 - Hero */
+    #hero {
+      height: 100vh;
+      background-color: var(--beige);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-title {
+      color: var(--white);
+      margin-bottom: 3rem;
+    }
+    .hero-title h1 {
+      font-weight: 700;
+      font-size: clamp(4rem, 12vw, 10rem);
+      line-height: 1;
+    }
+    .hero-title .subtitle {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 3vw, 2rem);
+      letter-spacing: 0.4em;
+      margin-top: 0.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    /* Section 2 - Sobre Nosotras */
+    #sobre-nosotras {
+      padding: 8rem 10%;
+      background-color: var(--cream);
+    }
+
+    .sobre-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .sobre-text h2 {
+      font-size: 3rem;
+      font-style: italic;
+      margin-bottom: 2rem;
+      color: var(--charcoal);
+    }
+
+    .sobre-text p {
+      font-size: 1.25rem;
+      margin-bottom: 3rem;
+      color: #4a4a4a;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      color: var(--charcoal);
+    }
+
+    .stat-item svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gold-accent);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .sobre-decor {
+      position: relative;
+      height: 100%;
+      min-height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .sobre-decor img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 1px solid var(--gold-accent);
+    }
+
+    .decor-box::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      right: 15px;
+      bottom: 15px;
+      border: 1px solid var(--gold-accent);
+      z-index: -1;
+    }
+
+    .decor-text {
+      font-family: var(--font-ui);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--white);
+      font-size: 0.875rem;
+    }
+
+    /* Section 3 - Servicios */
+    #servicios {
+      padding: 8rem 10%;
+      background-color: var(--beige-light);
+      text-align: center;
+    }
+
+    .servicios-header {
+      margin-bottom: 4rem;
+    }
+
+    .servicios-header h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .servicios-header p {
+      font-family: var(--font-ui);
+      color: var(--charcoal);
+      opacity: 0.7;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .tab-btn {
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: transparent;
+      border: none;
+      color: var(--charcoal);
+      opacity: 0.6;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1px;
+      background-color: var(--gold-accent);
+      transition: width 0.3s ease;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      opacity: 1;
+      color: var(--gold-accent);
+    }
+
+    .tab-btn.active::after {
+      width: 100%;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--beige);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    }
+
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-family: var(--font-ui);
+    }
+
+    .service-price {
+      font-weight: 700;
+      color: var(--gold-accent);
+    }
+
+    .service-duration {
+      font-size: 0.875rem;
+      color: #999;
+    }
+
+    .service-desc {
+      font-style: italic;
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .service-hover-btn {
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      width: 100%;
+      background: var(--gold-accent);
+      color: var(--white);
+      text-align: center;
+      padding: 1rem;
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: bottom 0.3s ease;
+    }
+
+    .service-card:hover .service-hover-btn {
+      bottom: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sobre-container {
+        grid-template-columns: 1fr;
+      }
+      .sobre-decor {
+        order: -1;
+        min-height: 300px;
+      }
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .hero-buttons {
+        flex-direction: column;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      #sobre-nosotras, #servicios {
+        padding: 5rem 5%;
+      }
+    }
+    /* Section 4 - Resultados */
+    #resultados {
+      padding: 8rem 10%;
+      background-color: var(--charcoal);
+      color: var(--white);
+      text-align: center;
+      position: relative;
+    }
+
+    .resultados-header {
+      margin-bottom: 4rem;
+    }
+    .resultados-header h2 {
+      font-size: 3rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .resultados-header p {
+      font-family: var(--font-ui);
+      color: var(--beige-light);
+      opacity: 0.8;
+    }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+    }
+
+    .ig-item {
+      position: relative;
+      background-color: var(--beige-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .ig-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .ig-item svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 1;
+      margin-bottom: 1rem;
+    }
+
+    .ig-item span {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.05em;
+    }
+
+    .ig-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(196, 185, 168, 0.8); /* --beige with opacity */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .ig-item:hover .ig-overlay {
+      opacity: 1;
+    }
+
+    .ig-overlay svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--white);
+      margin: 0;
+    }
+
+    /* Section 5 - Reseñas */
+    #resenas {
+      padding: 8rem 10%;
+      background-color: var(--beige-light);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .resenas-header h2 {
+      font-size: 3rem;
+      margin-bottom: 4rem;
+      color: var(--charcoal);
+    }
+
+    .slider-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow: hidden;
+      padding: 2rem 0;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      gap: 2rem;
+    }
+
+    .review-card {
+      min-width: calc(50% - 1rem); /* 2 cards visible on desktop */
+      background: var(--white);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .review-stars {
+      color: var(--gold-accent);
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-style: italic;
+      font-size: 1.125rem;
+      color: var(--charcoal);
+      flex-grow: 1;
+    }
+
+    .review-author {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-top: 1px solid var(--beige-light);
+      padding-top: 1.5rem;
+    }
+
+    .review-source {
+      font-size: 0.75rem;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--white);
+      border: 1px solid var(--beige);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: none;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+      color: var(--charcoal);
+    }
+
+    .slider-btn:hover {
+      background: var(--gold-accent);
+      color: var(--white);
+      border-color: var(--gold-accent);
+    }
+
+    .slider-btn.prev { left: 0; }
+    .slider-btn.next { right: 0; }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--beige-dark);
+      opacity: 0.5;
+      transition: all 0.3s ease;
+      cursor: none;
+    }
+
+    .dot.active {
+      opacity: 1;
+      transform: scale(1.5);
+      background-color: var(--charcoal);
+    }
+
+    /* Section 6 - Visítanos */
+    #visitanos {
+      padding: 8rem 10%;
+      background-color: var(--cream);
+    }
+
+    .visitanos-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .visitanos-info h2 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: var(--charcoal);
+    }
+
+    .info-group {
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .info-group svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gold-accent);
+      fill: none;
+      stroke-width: 1.5;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .info-text h3 {
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .info-text p {
+      color: #4a4a4a;
+      font-size: 1.125rem;
+    }
+
+    .visitanos-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 500px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Responsive adjustments for new sections */
+    @media (max-width: 1024px) {
+      .ig-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .visitanos-container {
+        grid-template-columns: 1fr;
+      }
+      .map-container {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .ig-grid {
+        grid-template-columns: 1fr;
+      }
+      .review-card {
+        min-width: 100%;
+      }
+      .visitanos-buttons {
+        flex-direction: column;
+      }
+      #resultados, #resenas, #visitanos {
+        padding: 5rem 5%;
+      }
+    }
+
+    /* Section 7 - Reserva */
+    #reserva {
+      padding: 120px 10%;
+      background-color: var(--beige);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .reserva-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--white);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1rem;
+    }
+
+    .reserva-subtitle {
+      font-family: var(--font-ui);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.125rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn-reserva-large {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background-color: var(--white);
+      color: var(--beige);
+      padding: 1.25rem 3rem;
+      border-radius: 4px;
+      display: inline-block;
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+      cursor: none;
+    }
+
+    .btn-reserva-large:hover {
+      background-color: var(--gold-accent);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .reserva-phone {
+      font-family: var(--font-ui);
+      color: var(--white);
+      font-size: 0.875rem;
+    }
+
+    .reserva-phone a {
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .reserva-phone a:hover {
+      color: var(--gold-accent);
+    }
+
+    /* Section 8 - Footer */
+    #footer {
+      background-color: var(--charcoal);
+      color: var(--beige-light);
+      padding: 6rem 10% 2rem;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+    }
+
+    .footer-col-1 .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .footer-col-1 p {
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--beige-light);
+      opacity: 0.8;
+    }
+
+    .footer-col-2 {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-col-2 a {
+      font-family: var(--font-ui);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+      width: fit-content;
+    }
+
+    .footer-col-2 a:hover {
+      color: var(--gold-accent);
+    }
+
+    .footer-col-3 {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-link {
+      color: var(--beige-light);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-link svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .social-link:hover {
+      color: var(--gold-accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(196, 185, 168, 0.2); /* --beige very faint */
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--beige-dark);
+    }
+
+    @media (max-width: 768px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+      .footer-col-2 {
+        align-items: center;
+      }
+      .footer-col-3 {
+        justify-content: center;
+      }
+      #reserva {
+        padding: 5rem 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="custom-cursor" id="cursor"></div>
+  <div class="noise-overlay"></div>
+
+  <nav id="navbar">
+    <a href="#hero" class="logo">BLOSSOM</a>
+    <div class="nav-links">
+      <a href="#sobre-nosotras">Sobre Nosotras</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#visitanos">Visítanos</a>
+      <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" class="btn btn-gold nav-btn">Reservar</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#sobre-nosotras" class="mobile-link">Sobre Nosotras</a>
+    <a href="#servicios" class="mobile-link">Servicios</a>
+    <a href="#resultados" class="mobile-link">Resultados</a>
+    <a href="#resenas" class="mobile-link">Reseñas</a>
+    <a href="#visitanos" class="mobile-link">Visítanos</a>
+    <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" class="btn btn-gold">Reservar Cita</a>
+  </div>
+
+  <section id="hero">
+    <div class="hero-title reveal">
+      <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183030/Captura_de_pantalla_2026-04-14_180917-removebg-preview_pb0vcz.png" alt="Blossom Logo" style="max-width: 800px; width: 95%; height: auto; margin: 0 auto 2rem; display: block;" referrerPolicy="no-referrer">
+    </div>
+    <div class="hero-buttons reveal" style="margin-top: -2rem;">
+      <a href="#servicios" class="btn btn-outline-white">Ver Servicios</a>
+      <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" class="btn btn-white">Reservar Cita</a>
+    </div>
+  </section>
+
+  <section id="sobre-nosotras">
+    <div class="sobre-container">
+      <div class="sobre-text reveal">
+        <h2>Sobre Nosotras</h2>
+        <p>En Blossom Nail Lab somos Dess y Patri, dos profesionales enamoradas de su oficio. Desde el primer día, nuestro objetivo ha sido crear un espacio donde cada clienta se sienta especial, cuidada y escuchada. Trabajamos con técnicas precisas, productos de calidad y una atención al detalle que se nota en cada acabado. No solo hacemos uñas — creamos pequeñas obras de arte que duran.</p>
+        
+        <div class="stats-grid">
+          <div class="stat-item">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span>+400 reseñas en Booksy<br>Valoración 5.0</span>
+          </div>
+          <div class="stat-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>4.6★ en Google<br>56 reseñas verificadas</span>
+          </div>
+          <div class="stat-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span>Desde 2020<br>En el corazón de Gijón</span>
+          </div>
+        </div>
+      </div>
+      <div class="sobre-decor reveal">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183387/642476929_18070682063548562_7485150286704534421_n_yqxvtv.jpg" alt="Sobre Nosotras" referrerPolicy="no-referrer">
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="servicios-header reveal">
+      <h2>Nuestros Servicios</h2>
+      <p>Selecciona la categoría que buscas</p>
+    </div>
+    
+    <div class="tabs reveal">
+      <button class="tab-btn active" data-target="manicura">Manicura</button>
+      <button class="tab-btn" data-target="pedicura">Pedicura</button>
+      <button class="tab-btn" data-target="esculpidas">Uñas Esculpidas</button>
+      <button class="tab-btn" data-target="cejas-pestanas">Cejas & Pestañas</button>
+      <button class="tab-btn" data-target="depilacion">Depilación</button>
+      <button class="tab-btn" data-target="retirada">Retirada & Reconstrucción</button>
+    </div>
+
+    <div class="services-grid reveal" id="services-container">
+      <!-- Services will be injected by JS -->
+    </div>
+  </section>
+
+  <section id="resultados">
+    <div class="noise-overlay"></div>
+    <div class="resultados-header reveal">
+      <h2>El trabajo habla por sí solo</h2>
+      <p>Síguenos en Instagram para ver nuestros últimos diseños</p>
+    </div>
+    
+    <div class="ig-grid reveal">
+      <div class="ig-item">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183478/584082216_18131216155494169_5303217412382562375_n._nzulht.jpg" alt="Resultado 1" referrerPolicy="no-referrer">
+      </div>
+      <div class="ig-item">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183478/571085533_18187979836336690_8438375235102180288_n._ehepkz.jpg" alt="Resultado 2" referrerPolicy="no-referrer">
+      </div>
+      <div class="ig-item">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183477/569209075_18082725856815102_3087369052715998572_n._uos1md.jpg" alt="Resultado 3" referrerPolicy="no-referrer">
+      </div>
+      <div class="ig-item">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183477/562028499_18069190379260474_6336266051510003219_n._amcujf.jpg" alt="Resultado 4" referrerPolicy="no-referrer">
+      </div>
+      <div class="ig-item">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183477/559854779_18082376171301982_4868545308576567734_n._ctb5p3.jpg" alt="Resultado 5" referrerPolicy="no-referrer">
+      </div>
+      <div class="ig-item">
+        <img src="https://res.cloudinary.com/dfbsqy5ul/image/upload/q_auto/f_auto/v1776183477/554681920_18029832506738486_4952563063426169252_n._uhwi0d.jpg" alt="Resultado 6" referrerPolicy="no-referrer">
+      </div>
+    </div>
+    
+    <a href="https://www.instagram.com/blossomnaillab/" target="_blank" class="btn btn-outline-white reveal">Ver más en Instagram</a>
+  </section>
+
+  <section id="resenas">
+    <div class="resenas-header reveal">
+      <h2>Lo que dicen nuestras clientas</h2>
+    </div>
+    
+    <div class="slider-container reveal">
+      <button class="slider-btn prev" id="prev-btn">❮</button>
+      <div class="slider-track" id="slider-track">
+        <!-- Reviews -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Increíble el trato y la profesionalidad. Llevo meses haciéndome las uñas aquí y siempre salgo encantada. Los diseños son preciosos y duran muchísimo."</p>
+          <div class="review-author">
+            <span>María G.</span>
+            <span class="review-source">Reseña en Google</span>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"El mejor salón de Gijón sin duda. El ambiente es súper relajante, te miman un montón y el resultado es impecable. 100% recomendable."</p>
+          <div class="review-author">
+            <span>Laura F.</span>
+            <span class="review-source">Reseña en Booksy</span>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Fui por primera vez para arreglarme unas uñas mordidas y el cambio ha sido espectacular. Tienen muchísima paciencia y te explican todo genial."</p>
+          <div class="review-author">
+            <span>Carmen R.</span>
+            <span class="review-source">Reseña en Google</span>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Me hice la pedicura SPA y fue una experiencia maravillosa. Súper relajante y mis pies quedaron como nuevos. Volveré seguro."</p>
+          <div class="review-author">
+            <span>Ana M.</span>
+            <span class="review-source">Reseña en Booksy</span>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"¡Un servicio de 10! El diseño de uñas que me hicieron es espectacular, todo el mundo me pregunta dónde me las hago. Son unas artistas."</p>
+          <div class="review-author">
+            <span>Lucía P.</span>
+            <span class="review-source">Reseña en Google</span>
+          </div>
+        </div>
+      </div>
+      <button class="slider-btn next" id="next-btn">❯</button>
+      <div class="slider-dots" id="slider-dots">
+        <!-- Dots injected by JS -->
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="https://g.page/review" target="_blank" rel="noopener noreferrer" class="btn btn-outline-white" style="border-color: var(--charcoal); color: var(--charcoal);">Dejar reseña</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="visitanos">
+    <div class="visitanos-container">
+      <div class="visitanos-info reveal">
+        <h2>Visítanos</h2>
+        
+        <div class="info-group">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="info-text">
+            <h3>Dónde estamos</h3>
+            <p>Calle Principal 123, Bajo<br>33201 Gijón, Asturias</p>
+          </div>
+        </div>
+        
+        <div class="info-group">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="info-text">
+            <h3>Horario</h3>
+            <p>Lunes a Viernes: 10:00 - 20:00<br>Sábados: 10:00 - 14:00<br>Domingos: Cerrado</p>
+          </div>
+        </div>
+        
+        <div class="info-group">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div class="info-text">
+            <h3>Contacto</h3>
+            <p>+34 650 17 07 92</p>
+          </div>
+        </div>
+        
+        <div class="visitanos-buttons">
+          <a href="https://www.google.com/maps/place/Blossom+Nail+Lab/@43.5386721,-5.6608627,17z/data=!3m1!4b1!4m6!3m5!1s0xd367d6e7686a1d5:0x195097d64ecb2ecb!8m2!3d43.5386682!4d-5.6582878!16s%2Fg%2F11nfpcbkhp?entry=ttu&g_ep=EgoyMDI2MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-gold">Cómo llegar</a>
+        </div>
+      </div>
+      
+      <div class="map-container reveal">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2891.580996051273!2d-5.660862!3d43.5386682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd367d6e7686a1d5%3A0x195097d64ecb2ecb!2sBlossom%20Nail%20Lab!5e0!3m2!1ses!2ses!4v1710000000000" width="100%" height="100%" style="border:0; border-radius:16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Custom Cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Scroll Reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Services Data
+    const servicesData = {
+      'manicura': [
+        { name: 'Manicura sin Esmaltar', price: '12€', duration: '15min' },
+        { name: 'Manicura Tradicional', price: '16€', duration: '30min' },
+        { name: 'Esmaltado Semipermanente', price: '25€', duration: '1h' },
+        { name: 'Esmaltado Semipermanente con Refuerzo', price: '30€', duration: '1h' }
+      ],
+      'pedicura': [
+        { name: 'Pedicura sin Esmaltar', price: '12€', duration: '15min' },
+        { name: 'Esmaltado Tradicional', price: '16€', duration: '30min' },
+        { name: 'Esmaltado Semipermanente', price: '25€', duration: '1h' },
+        { name: 'Pedicura SPA', price: '28€', duration: '45min' },
+        { name: 'Pedicura SPA + Esmaltado Tradicional', price: '32€', duration: '1h' },
+        { name: 'Pedicura SPA + Esmaltado Semipermanente', price: '40€', duration: '1h 15min' }
+      ],
+      'esculpidas': [
+        { name: 'Uñas Mordidas (Onicofagia)', price: '45€', duration: '1h 15min', desc: 'Tratamiento recuperación uña natural, incluye francesa o color liso con decoración sencilla' },
+        { name: 'Nuevas S', price: '45€', duration: '1h30' },
+        { name: 'Nuevas M', price: '50€', duration: '1h30' },
+        { name: 'Nuevas L', price: '55€', duration: '1h45' },
+        { name: 'Nuevas XL', price: '60€+', duration: '2h' },
+        { name: 'Relleno S', price: '35€', duration: '1h' },
+        { name: 'Relleno M', price: '40€', duration: '1h' },
+        { name: 'Relleno L', price: '45€', duration: '1h15' },
+        { name: 'Relleno XL', price: '50€+', duration: '30min' }
+      ],
+      'cejas-pestanas': [
+        { name: 'Laminado de Cejas', price: '35€', duration: '45min' },
+        { name: 'Brows Henna', price: '30€', duration: '30min' },
+        { name: 'Tinte de Cejas', price: '25€', duration: '20min' },
+        { name: 'Laminado + Tinte', price: '55€', duration: '1h 5min' },
+        { name: 'Laminado/Lifting de Pestañas', price: '40€', duration: '1h', desc: 'Con tecnología Keratin Up, pestañas saludables y densas' }
+      ],
+      'depilacion': [
+        { name: 'Diseño Cejas', price: '15€', duration: '30min' },
+        { name: 'Retoque Cejas', price: '10€', duration: '15min' },
+        { name: 'Hilo Labio', price: '6€', duration: '5min' },
+        { name: 'Hilo Facial Completo', price: '25€', duration: '40min' }
+      ],
+      'retirada': [
+        { name: 'Retirada Semipermanente Pies', price: '6€', duration: '10min' },
+        { name: 'Retirada Semipermanente Manos', price: '8€', duration: '20min' },
+        { name: 'Retirada Uñas Esculpidas', price: '12€', duration: '30min' },
+        { name: 'Reconstrucción S', price: '4€', duration: '10min' },
+        { name: 'Reconstrucción M', price: '5€', duration: '10min' },
+        { name: 'Reconstrucción L/XL', price: '6€', duration: '20min' }
+      ]
+    };
+
+    const servicesContainer = document.getElementById('services-container');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+
+    function renderServices(category) {
+      servicesContainer.innerHTML = '';
+      const services = servicesData[category];
+      
+      services.forEach(service => {
+        const card = document.createElement('div');
+        card.className = 'service-card';
+        
+        let descHtml = service.desc ? `<p class="service-desc">${service.desc}</p>` : '';
+        
+        card.innerHTML = `
+          <h3 class="service-name">${service.name}</h3>
+          <div class="service-details">
+            <span class="service-price">${service.price}</span>
+            <span class="service-duration">${service.duration}</span>
+          </div>
+          ${descHtml}
+          <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" class="service-hover-btn">Reservar</a>
+        `;
+        
+        servicesContainer.appendChild(card);
+      });
+    }
+
+    // Initialize with first category
+    renderServices('manicura');
+
+    // Tab clicks
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderServices(btn.dataset.target);
+      });
+    });
+    // Review Slider
+    const track = document.getElementById('slider-track');
+    const reviewCards = document.querySelectorAll('.review-card');
+    const dotsContainer = document.getElementById('slider-dots');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    let currentIndex = 0;
+    let cardsPerView = window.innerWidth > 768 ? 2 : 1;
+    let maxIndex = reviewCards.length - cardsPerView;
+    
+    // Create dots
+    for (let i = 0; i <= maxIndex; i++) {
+      const dot = document.createElement('div');
+      dot.className = `dot ${i === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+    
+    const dots = document.querySelectorAll('.dot');
+    
+    function updateSlider() {
+      const cardWidth = reviewCards[0].offsetWidth;
+      const gap = 32; // 2rem
+      track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+    
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlider();
+    }
+    
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) goToSlide(currentIndex - 1);
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < maxIndex) goToSlide(currentIndex + 1);
+    });
+    
+    // Auto play
+    let sliderInterval = setInterval(() => {
+      currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+      updateSlider();
+    }, 5000);
+    
+    // Pause on hover
+    track.addEventListener('mouseenter', () => clearInterval(sliderInterval));
+    track.addEventListener('mouseleave', () => {
+      sliderInterval = setInterval(() => {
+        currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+        updateSlider();
+      }, 5000);
+    });
+    
+    // Handle resize
+    window.addEventListener('resize', () => {
+      const newCardsPerView = window.innerWidth > 768 ? 2 : 1;
+      if (newCardsPerView !== cardsPerView) {
+        cardsPerView = newCardsPerView;
+        maxIndex = reviewCards.length - cardsPerView;
+        
+        // Recreate dots
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i <= maxIndex; i++) {
+          const dot = document.createElement('div');
+          dot.className = `dot ${i === 0 ? 'active' : ''}`;
+          dot.addEventListener('click', () => goToSlide(i));
+          dotsContainer.appendChild(dot);
+        }
+        
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+        updateSlider();
+      } else {
+        updateSlider(); // Just update widths
+      }
+    });
+
+    // Touch events for slider
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    track.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+      clearInterval(sliderInterval);
+    }, {passive: true});
+    
+    track.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+      
+      sliderInterval = setInterval(() => {
+        currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+        updateSlider();
+      }, 5000);
+    }, {passive: true});
+    
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      if (touchEndX < touchStartX - swipeThreshold) {
+        // Swipe left
+        if (currentIndex < maxIndex) goToSlide(currentIndex + 1);
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        // Swipe right
+        if (currentIndex > 0) goToSlide(currentIndex - 1);
+      }
+    }
+  </script>
+
+  <section id="reserva">
+    <div class="noise-overlay"></div>
+    <h2 class="reserva-title reveal">¿Lista para tu próxima cita?</h2>
+    <p class="reserva-subtitle reveal">Reserva online en segundos a través de Booksy</p>
+    <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" rel="noopener noreferrer" class="btn-reserva-large reveal">Reservar mi cita ahora →</a>
+    <p class="reserva-phone reveal">O llámanos directamente: <a href="tel:6501707092">650 17 07 92</a></p>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-container reveal">
+      <div class="footer-col-1">
+        <a href="#hero" class="footer-logo">BLOSSOM / NAIL LAB</a>
+        <p>Calle Principal 123, Bajo<br>33201 Gijón, Asturias<br>+34 650 17 07 92</p>
+      </div>
+      <div class="footer-col-2">
+        <a href="#sobre-nosotras">Sobre Nosotras</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#visitanos">Visítanos</a>
+        <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" rel="noopener noreferrer">Reservar</a>
+      </div>
+      <div class="footer-col-3">
+        <a href="https://www.instagram.com/blossomnaillab/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/p/Blossom-Nail-Lab-100067935521913/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@blossomnailab" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.72 5.39-1.21 1.42-3.16 2.22-5.11 2.22-1.94 0-3.89-.8-5.11-2.22-1.21-1.42-1.71-3.42-1.71-5.39 0-1.97.5-3.97 1.71-5.39 1.22-1.42 3.17-2.22 5.11-2.22.38 0 .77.04 1.15.1v4.02c-.38-.06-.77-.1-1.15-.1-1.08 0-2.18.45-2.85 1.24-.67.79-.93 1.91-.93 3.03 0 1.11.26 2.23.93 3.02.67.79 1.77 1.24 2.85 1.24 1.08 0 2.18-.45 2.85-1.24.67-.79.93-1.91.93-3.02V.02z"/></svg>
+        </a>
+        <a href="https://booksy.com/es-es/12784_blossom-nail-lab_salon-de-unas_76596_gijon#ba_s=seo" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Booksy">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Blossom Nail Lab · Gijón, Asturias · Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+</body>
+</html>
